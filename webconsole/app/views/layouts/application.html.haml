@@ -1,10 +1,109 @@
-!!!
-%html
-    %head
-        %title WebConsole
-        = stylesheet_link_tag :all
-        = javascript_include_tag :defaults
-        = csrf_meta_tag
-    %body
-        = yield
+!!! Strict
+%html{ :xmlns => "http://www.w3.org/1999/xhtml" }
+  %head
+    %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "content-type" }
+    %meta{ :name => "robots", :content => "all" }
+    %meta{ :name => "generator", :content => "RapidWeaver" }
+    /
+      User defined head content such as meta tags and encoding options
+    %title
+      Console
+    %link{ :href => "/rw_common/themes/Manitoba/styles.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+    %link{ :href => "/rw_common/themes/Manitoba/print.css", :rel => "stylesheet", :type => "text/css", :media => "print" }
+    %link{ :href => "/rw_common/themes/Manitoba/handheld.css", :rel => "stylesheet", :type => "text/css", :media => "handheld" }
+    %link{ :href => "/rw_common/themes/Manitoba/colourtag-page1.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+    /
+      [if IE]><style type="text/css" media="screen">body {behavior: url(/rw_common/themes/Manitoba/csshover.htc);}</style><![endif]
+    %link{ :href => "/rw_common/themes/Manitoba/css/site_width/800.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+    %link{ :href => "/rw_common/themes/Manitoba/css/title/title_inline.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+    %link{ :href => "/rw_common/themes/Manitoba/css/sidebar/sidebar_right.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+    %link{ :href => "/rw_common/themes/Manitoba/css/icons/green.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+    /
+      Style variations - these are set up in the theme.plist
+    /
+      [if IE 6]><link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/Manitoba/css/ie6.css" /><![endif]
+    /
+      [if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/Manitoba/css/ie7.css" /><![endif]
+    /
+      User defined styles
+    %script{ :src => "/rw_common/themes/Manitoba/javascript.js", :type => "text/javascript" }
+    = javascript_include_tag :defaults
+    = csrf_meta_tag
 
+    /
+      User defined javascript
+  /
+    This page was created with RapidWeaver from Realmac Software. http://www.realmacsoftware.com
+  %body
+    #pageHeader
+      /
+        Start page header
+      #title
+        %h1
+          Reports of Hudson and Hadoop
+        %h2
+        #navcontainer
+          /
+            Start Navigation
+          %ul
+            %li
+              %a#current{ :href => "/index.html", :rel => "self" }
+                Console
+        /
+          End navigation
+    /
+      End page header
+    #bar
+    #container
+      /
+        Start container
+      #sidebarContainer
+        /
+          Start Sidebar wrapper
+        .sideHeader
+        /
+          Sidebar header
+        #sidebar
+          /
+            Start sidebar content
+          /
+            sidebar content you enter in the page inspector
+          /
+            sidebar content such as the blog archive links
+        /
+          End sidebar content
+      /
+        End sidebar wrapper
+      #contentContainer
+        /
+          Start main content wrapper
+        #content
+          /
+            Start content
+          = yield
+          .clearer
+        /
+          End content
+      /
+        End main content wrapper
+      .clearer
+    /
+      End container
+    #footerContainer
+      #footer
+        /
+          Start Footer
+        %p
+          \&copy; 2010 Hapirus
+        #breadcrumbcontainer
+          /
+            Start the breadcrumb wrapper
+          %ul
+            %li
+              %a{ :href => "/index.html" }
+                Console
+              \&nbsp;>&nbsp;
+        /
+          End breadcrumb
+      /
+        End Footer
