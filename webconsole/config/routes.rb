@@ -1,4 +1,6 @@
 Webconsole::Application.routes.draw do |map|
+  get "console/index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
