@@ -25,16 +25,21 @@ package hudson.plugins.hadoop;
 
 import hudson.model.AbstractModelObject;
 import hudson.model.Action;
+import hudson.model.Api;
 import hudson.model.Hudson;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.kohsuke.stapler.export.Exported;
+import org.kohsuke.stapler.export.ExportedBean;
 
 /**
  * Top-level Hadoop page that gets added to Hudson.
  *
  * @author Kohsuke Kawaguchi
  */
+@ExportedBean
 public class HadoopPage extends AbstractModelObject implements Action {
     /*package*/ boolean pendingConfiguration;
 
@@ -80,4 +85,20 @@ public class HadoopPage extends AbstractModelObject implements Action {
     public PluginImpl getPlugin() {
         return PluginImpl.get();
     }
+
+	public Api getApi() {
+		return new Api(this);
+	}
+
+	@Exported
+	public Object getTracker() {
+        PluginImpl p = PluginImpl.get();
+		try {
+			return p.channel.callAsync(new JobTrackerQueryTask()).get();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

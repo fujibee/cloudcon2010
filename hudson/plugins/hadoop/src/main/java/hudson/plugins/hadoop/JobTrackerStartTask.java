@@ -65,6 +65,9 @@ class JobTrackerStartTask implements Callable<Void,Exception>, Runnable {
         jc.set("mapred.job.tracker.http.address","0.0.0.0:"+HTTP_PORT);
         jc.set("mapred.local.dir",new File(hudsonRoot,"hadoop/mapred").getPath());
         tracker = JobTracker.startTracker(jc);
+        
+        // for the API access
+        ServiceRepository.tracker = tracker;
 
         new Thread(this).start();
 
