@@ -4,9 +4,29 @@ import org.apache.hadoop.hdfs.server.namenode.NameNode;
 import org.apache.hadoop.mapred.JobTracker;
 
 class ServiceRepository {
+	
+	/* singleton instance */
+	private static ServiceRepository instance = new ServiceRepository();
+	
 	/* job tracker */
-	static JobTracker tracker;
+	private JobTracker jobTracker;
 	
 	/* name node service (not implemented) */
-	static NameNode nameNode;
+	private NameNode nameNode;
+
+	static ServiceRepository getInstance() {
+		return instance;
+	}
+	
+	void setJobTracker(JobTracker jt) {
+		this.jobTracker = jt;
+	}
+	
+	JobTracker getJobTracker() {
+		return this.jobTracker;
+	}
+	
+	private ServiceRepository() {
+		// do nothing
+	}
 }

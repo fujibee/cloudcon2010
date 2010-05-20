@@ -91,7 +91,7 @@ public class HadoopPage extends AbstractModelObject implements Action {
 	}
 
 	@Exported
-	public Object getTracker() {
+	public Object getJobTracker() {
         PluginImpl p = PluginImpl.get();
 		try {
 			return p.channel.callAsync(new JobTrackerQueryTask()).get();

@@ -13,7 +13,7 @@ class JobTrackerQueryTask implements Callable<Object,Exception> {
 	private JobTracker tracker;
 
 	public Object call() throws Exception {
-		tracker = ServiceRepository.tracker;
+		tracker = ServiceRepository.getInstance().getJobTracker();
 		Map<String, Object> result = new HashMap<String, Object>();
 		
 		result.put("clusterStatus", clusterStatusToMap());

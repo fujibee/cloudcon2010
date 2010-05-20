@@ -67,7 +67,7 @@ class JobTrackerStartTask implements Callable<Void,Exception>, Runnable {
         tracker = JobTracker.startTracker(jc);
         
         // for the API access
-        ServiceRepository.tracker = tracker;
+        ServiceRepository.getInstance().setJobTracker(tracker);
 
         new Thread(this).start();
 
