@@ -75,7 +75,11 @@ class NameNodeStartTask implements Callable<Void,IOException> {
         }
 
         System.out.println("Starting namenode");
-        NameNode.createNameNode(new String[0], conf);
+        NameNode nameNode = NameNode.createNameNode(new String[0], conf);
+        
+        // for the API access
+        ServiceRepository.getInstance().setNameNode(nameNode);
+
         return null;
     }
 

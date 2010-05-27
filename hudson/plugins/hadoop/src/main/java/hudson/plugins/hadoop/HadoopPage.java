@@ -101,4 +101,15 @@ public class HadoopPage extends AbstractModelObject implements Action {
 		return null;
 	}
 	
+	@Exported
+	public Object getNameNode() {
+        PluginImpl p = PluginImpl.get();
+		try {
+			return p.channel.callAsync(new NameNodeQueryTask()).get();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

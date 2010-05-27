@@ -26,7 +26,14 @@ class ServiceRepository {
 		return this.jobTracker;
 	}
 	
-	private ServiceRepository() {
-		// do nothing
+	void setNameNode(NameNode nn) {
+		this.nameNode = nn;
+	}
+	
+	NameNode getNameNode() {
+		return this.nameNode;
+	}
+	
+	private ServiceRepository() { // do nothing
 	}
 }
