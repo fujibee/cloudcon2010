@@ -1,33 +1,19 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require 'net/ssh'
+$:.unshift('lib')
+require 'hcc'
 
-HOST='cl-stool.starbed.org'
-USER='cloudcom008'
-PASS=ENV['CLOUDCOM_PASS']
-
-#if ARGV.size < 2
-  puts "USAGE: #{$0} command args"
-#  exit 1
-#end
 command = ARGV.shift
+servers = ARGV.shift
 
-COMMANDS = [
-  :launch,  # add + start
-  :add,     # copy swarm jar
-  :start,   # kick swarm
-  :clear,   # stop + delete
-  :stop,    # kill swarm process
-  :delete   # remove hadoop dir
-]
-
-# execute command on ssh
-def ssh_cmd(cmd)
-  ret = ''
-  Net::SSH.start(HOST, USER, :password => PASS) do |ssh|
-    ret = ssh.exec! cmd
-  end
-  ret
+unless command and COMMANDS.include? command.to_sym
+  usage('not a command')
+  exit 1
 end
 
+unless servers
+  usage('no servers')
+  exit 1
+end
+
+puts ssh_cmd command
