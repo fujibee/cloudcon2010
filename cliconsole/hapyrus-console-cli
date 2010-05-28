@@ -3,17 +3,18 @@
 $:.unshift('lib')
 require 'hcc'
 
+# command
 command = ARGV.shift
-servers = ARGV.shift
-
 unless command and COMMANDS.include? command.to_sym
   usage('not a command')
   exit 1
 end
 
+# servers
+servers = ARGV.shift
 unless servers
   usage('no servers')
   exit 1
 end
 
-puts ssh_cmd command
+send(command, servers)

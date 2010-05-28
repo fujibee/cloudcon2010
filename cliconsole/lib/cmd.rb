@@ -4,19 +4,22 @@ COMMANDS = [
   :start,   # kick swarm
   :clear,   # stop + delete
   :stop,    # kill swarm process
-  :delete   # remove hadoop dir
+  :delete,  # remove hadoop dir
+  :test     # for test
 ]
 
 # execute command on ssh
-def ssh_cmd(cmd)
-  ret = ''
-  Net::SSH.start(HOST, USER, :password => PASS) do |ssh|
-    ret = send(cmd, ssh)
-  end
-  ret
+def add(servers)
+  puts ">> add jar to #{servers}"
+  Net::SCP.upload!(HOST, USER, SWARM_JAR, '~/', :password => PASS)
 end
 
-def add(ssh)
-  ssh.exec!('hostname')
+def test(servers)
+  puts ">> test to #{servers}"
+  ret = ''
+  Net::SSH.start(HOST, USER, :password => PASS) do |ssh|
+    ret = ssh.exec!('hostname')
+  end
+  ret
 end
 
