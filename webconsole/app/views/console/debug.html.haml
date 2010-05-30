@@ -1,0 +1,22 @@
+%h1 Console#index
+%div.computer
+  %h3= @master['displayName']
+  %ul
+    - @master.each do |k, v|
+      - v = "(empty)" if v.nil? or v.blank?
+      %li= "#{k} => #{v}"
+
+- @slaves.each do |slave|
+  %div.computer
+    %h3= slave['displayName']
+    %ul
+      - slave.each do |k, v|
+        - v = "(empty)" if v.nil? or v.blank?
+        %li= "#{k} => #{v}"
+
+%div.hadoop
+  %h3 Hadoop
+  %ul
+    - @hadoop.each do |k, v|
+      - v = "(empty)" if v.nil? or v.blank?
+      %li= "#{k} => #{v}"
