@@ -40,7 +40,7 @@ def stop(server)
 end
 
 def delete(server)
-  puts ">> stop slave on #{server}"
+  puts ">> delete slave on #{server}"
   Net::SSH.start(server, USER, :password => PASS) do |ssh|
     ssh.exec!("rm -rf hadoop")
     ssh.exec!("rm -f #{SWARM_JAR}")
@@ -48,7 +48,7 @@ def delete(server)
 end
 
 def clear(server)
-  puts ">> stop slave on #{server}"
+  puts ">> clear slave on #{server}"
   stop(server)
   delete(server)
 end
