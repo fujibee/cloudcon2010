@@ -8,18 +8,70 @@ COMMANDS = [
   :test     # for test
 ]
 
-# execute command on ssh
-def add(servers)
-  puts ">> add jar to #{servers}"
-  Net::SCP.upload!(HOST, USER, SWARM_JAR, '~/', :password => PASS)
-end
-
-def test(servers)
-  puts ">> test to #{servers}"
-  ret = ''
-  Net::SSH.start(HOST, USER, :password => PASS) do |ssh|
-    ret = ssh.exec!('hostname')
+def add(server)
+  puts ">> add jar to #{server}"
+  Net::SCP.start(server, USER, :password => PASS) do |scp|
+    scp.upload!(SWARM_JAR, SWARM_JAR)
   end
-  ret
 end
 
+def start(server)
+  puts ">> start swarm jar to #{server}"
+  Thread.new do
+    Net::SSH.start(server, USER, :password => PASS) do |ssh|
+      ssh.exec!("nohup java -jar #{SWARM_JAR} &")
+    end
+  end
+  sleep 1 # wait to send
+end
+
+def launch(server)
+  puts ">> launch slave to #{server}"
+  add(server)
+  start(server)
+end
+
+def stop(server)
+  puts ">> stop slave on #{server}"
+  Net::SSH.start(server, USER, :password => PASS) do |ssh|
+    ssh.exec!("ps aux|grep java|grep -v grep|xargs kill -9")
+  end
+end
+
+def delete(server)
+  puts ">> stop slave on #{server}"
+  Net::SSH.start(server, USER, :password => PASS) do |ssh|
+    ssh.exec!("rm -rf hadoop")
+    ssh.exec!("rm -f #{SWARM_JAR}")
+  end
+end
+
+def clear(server)
+  puts ">> stop slave on #{server}"
+  stop(server)
+  delete(server)
+end
+
+def test(server)
+  puts ">> test to #{server}"
+  Net::SSH.start(server, USER, :password => PASS) do |ssh|
+    p ret = ssh.exec!("hostname")
+  end
+end
+
+def ssh(host, cmd)
+  print <<-`EOC`
+    expect -c "
+    set timeout 5
+    spawn ssh #{USER}:#{host}
+    expect "password:"
+    send "#{PASS}\r"
+    expect "Last login"
+    send "#{cmd}ls\r"
+    interact"
+  EOC
+end
+
+def scp(host, src, dest)
+  `scp #{src} #{USER}@#{host}:#{dest}`
+end

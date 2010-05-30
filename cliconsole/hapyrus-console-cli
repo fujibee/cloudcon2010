@@ -17,4 +17,11 @@ unless servers
   exit 1
 end
 
-send(command, servers)
+if servers =~ /(\w)(\d*)\.\.(\w)(\d*)/
+  prefix = $1
+  server_range = eval(servers.gsub(prefix, ''))
+  server_range.each do |s|
+  send(command, "#{prefix}#{s}")
+else
+  send(command, servers)
+end
