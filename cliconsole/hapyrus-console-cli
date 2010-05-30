@@ -21,7 +21,8 @@ if servers =~ /(\w)(\d*)\.\.(\w)(\d*)/
   prefix = $1
   server_range = eval(servers.gsub(prefix, ''))
   server_range.each do |s|
-  send(command, "#{prefix}#{s}")
+    send(command, "#{prefix}#{s}")
+  end
 else
   send(command, servers)
 end

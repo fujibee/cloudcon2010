@@ -17,9 +17,10 @@ end
 
 def start(server)
   puts ">> start swarm jar to #{server}"
+  this_host = `hostname`.chomp
   Thread.new do
     Net::SSH.start(server, USER, :password => PASS) do |ssh|
-      ssh.exec!("nohup java -jar #{SWARM_JAR} &")
+      ssh.exec!("nohup java -jar #{SWARM_JAR} -master #{this_host} &")
     end
   end
   sleep 1 # wait to send
