@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>untitled</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="平野 智也">
+
+	<link rel="stylesheet" href="./style.css" type="text/css" media="screen"charset="utf-8" />
+	<!-- Date: 2010-05-28 -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"> </script>
+	<script type="text/javascript" src="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> </script>
+	<script type="text/javascript" >
+        // var src = "https://mail.google.com/mail/?ui=2&ik=7809db1df0&view=att&th=128d41a1b992ff81&attid=0.3&disp=inline&realattid=f_g5q6gk7b2&zw";
+	    var src = "./elephants.png";
+
+        var count = 0;
+        var row = 0;
+        var col = 0;
+        var numOfRows = 10;
+        var totalElephants = 100;
+
+	    var createElephant = function() {
+	        var img = $('<img>');
+	        img.attr("src", src).attr("width", 90).attr("height", 60);
+	        img.css("position", "absolute");
+	        img.css("left", 88 * (row % numOfRows));
+	        img.css("top", "-200px");
+	        return img;
+	    }
+
+	    var animateElephant = function() {
+            var img = createElephant();
+            $('#world').append(img);
+            var top = 400 - 58 * col;
+            img.animate({top: top + "px"}, 1000, "easeOutBounce");
+            row++;
+            col = Math.floor(row / numOfRows);
+	    }
+
+	    var elephant = function() {
+	        if(++count <= totalElephants) {
+    	        $('#counter').text(count);
+    	        animateElephant();
+	        } else {
+	            clearInterval(timerId);
+	        }
+	    }
+
+	    var timerId;
+
+	    $(function(){
+	        timerId = setInterval(elephant, 1000);
+	    });
+	</script>
+</head>
+<body>
+    <div id='counter'></div>
+    <div id='top'></div>
+    <div id='world'></div>
+</body>
+</html>
