@@ -1,22 +1,81 @@
 body {
   background-color: #86a4ef;
+  margin: 0;
 }
-
+a{
+    border: 0;
+}
+img{
+    border: 0;
+}
 #top {
   width: 100%;
   height: 200px;
-  background-color: #898989;
+  background-color: #ffffff;
 }
 
+#title {
+    height: 180px;
+    text-align: center;
+}
+#tower{
+    float: right;
+    position: absolute;
+    top: 115px;
+    right: 100px;
+}
+#menu{
+    height: 20px;
+    background-image: url(/images/bg.png);
+}
 #counter {
   font-size: 60px;
-  top: 300px;
+  top: 400px;
   left: 1000px;
   position: absolute;
+}
+#count_bg{
+  top: 350px;
+  left: 960px;
+  position: absolute;
+  height: 136px;
+  width: 276px;
+  background-image: url(/images/counter.png);
 }
 
 #world {
   width:100%;
-  height:500px;
+  height:610px;
   position:absolute;
+  border-bottom: 130px solid green;
+}
+
+#job{
+  width:100%;
+  height:610px;
+  position:absolute;
+  border-bottom: 130px solid green;
+}
+
+#jobby{
+    position: absolute;
+    top: 58px;
+    left: 100px;
+}
+
+#mapArea{
+  position: absolute;
+  top: 100px;
+  left: 312px;
+/*  width: 99px;
+  height: 0px;
+  background-color: #ffffff; */
+}
+
+#mapRect{
+  position: absolute;
+  width: 99px;
+  height: 0px;
+  top: 400px;
+  background-color: #ffffff;
 }

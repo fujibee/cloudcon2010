@@ -1,3 +1,23 @@
+#tower
+  %img{ :src => "/images/tower.png" }
+#count_bg
 #counter
 #top
+  #title
+    %img{ :src => "/images/title.png" }
+  #menu
+    %img{ :src => "/images/menu_home.png" }
+    %img{ :src => "/images/menu_console.png" }
+    %a{ :href => "/console/jobs" }
+      %img{ :src => "/images/menu_job.png" }
 #world
+:javascript
+  var initial = #{@initial};
+  $(function(){
+    if(initial !== undefined) {
+      count = initial;
+      showElephants(count);
+    }
+    $('#counter').text(count);
+    setInterval(run, 1000);
+  });
