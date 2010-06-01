@@ -11,6 +11,7 @@ Webconsole::Application.routes.draw do |map|
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
+  match 'console/job(.:format)' => 'console#job'
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
@@ -57,5 +58,4 @@ Webconsole::Application.routes.draw do |map|
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   match ':controller(/:action(.:format))'
-  # match ':controller(/:action(/:id(.:format)))'
 end

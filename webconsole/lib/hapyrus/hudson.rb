@@ -30,15 +30,15 @@ module Hapyrus
     include Singleton
 
     def general_json
-      @general_json ||= JSON.parse(open_via_socks5(GENERAL_URI.to_uri)) rescue {}
+      JSON.parse(open_via_socks5(GENERAL_URI.to_uri)) rescue {}
     end
 
     def computer_json
-      @computer_json ||= JSON.parse(open_via_socks5(COMPUTER_URI.to_uri)) rescue {}
+      JSON.parse(open_via_socks5(COMPUTER_URI.to_uri)) rescue {}
     end
 
     def master_json
-      @master_json ||= JSON.parse(open_via_socks5(MASTER_URI.to_uri)) rescue {}
+      JSON.parse(open_via_socks5(MASTER_URI.to_uri)) rescue {}
     end
 
     def slaves_json
@@ -47,7 +47,15 @@ module Hapyrus
     end
 
     def hadoop_json
-      @hadoop_json ||= JSON.parse(open_via_socks5(HADOOP_URI.to_uri)) rescue {}
+      JSON.parse(open_via_socks5(HADOOP_URI.to_uri)) rescue {}
+    end
+
+    def job(id)
+      hadoop_json['jobTracker']['jobs'].find {|job| job["jobId"] == id }
+    end
+
+    def latest_job
+      hadoop_json['jobTracker']['jobs'].last
     end
   end
 end

@@ -63,6 +63,27 @@ img{
     left: 100px;
 }
 
+#startTime{
+  position: absolute;
+  left: 100px;
+  top: 39px;
+/*  color: #ff0000;*/
+}
+
+#elapsedTime{
+  position: absolute;
+  left: 100px;
+  top: 87px;
+/*  color: #000;*/
+}
+
+#runState{
+  position: absolute;
+  left: 100px;
+  top: 135px;
+/*  color: #000;*/
+}
+
 #mapArea{
   position: absolute;
   top: 100px;
@@ -73,6 +94,20 @@ img{
 }
 
 #mapRect{
+  position: absolute;
+  width: 99px;
+  height: 0px;
+  top: 400px;
+  background-color: #ffffff;
+}
+
+#reduceArea{
+    position: absolute;
+    top: 100px;
+    left: 581px;
+}
+
+#reduceRect{
   position: absolute;
   width: 99px;
   height: 0px;

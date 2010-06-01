@@ -1,3 +1,5 @@
+/* Utils */
+
 var log = function() {
   if(window.console) {
     var msgs = "";
@@ -5,6 +7,15 @@ var log = function() {
     console.debug(msgs);
   }
 }
+
+function fillZero( number, size ) {
+  if ( number < 0 ) throw "illegal argument.";
+  var s = number != 0 ? Math.log( number ) * Math.LOG10E : 0;
+  for( i=1,n=size-s,str="";i<n;i++ ) str += "0";
+  return str+number;
+}
+
+/* Hapyrus */
 
 var src = "/images/elephants.png";
 
@@ -55,39 +66,42 @@ var showElephants = function(num) {
   }
 }
 
-var run = function() {
-  var elephantTimerId;
-  $.getJSON('/console/slaves.json', function(data) {
-    elephantTimerId = setInterval(function() {
-      if(count == data.length) {
-        clearInterval(elephantTimerId);
-      } else if(count < data.length) {
-        ++count;
-        $('#counter').text(count);
-        dropElephant();
-      } else if(count > data.length) {
-        --count;
-        $('#counter').text(count);
-        throwElephant(count);
-      }
-    }, 1000);
-  });
+var jobStatus = {
+  1: 'running',
+  2: 'succeeded',
+  3: 'failed',
+  4: 'prep',
+  5: 'killed'
 }
 
-var runForJob = function() {
-  $.getJSON('/console/hadoop.json', function(data) {
-    animateMapBar(data.map);
-  })
+
+var isJobFinished = function(state) {
+  return state == '2' || state == '3' || state == '5';
 }
 
-var showMapBar = function(per) {
-  var h = 400 * per / 100;
+var formatSec = function(sec) {
+  var h = 0, m = 0, s = 0;
+  if(sec > 3600) {
+    h = Math.floor(sec / 3600);
+    m = Math.floor((sec - h * 3600) / 60);
+    s = sec - h * 3600 - m * 60;
+  } else if(sec > 60) {
+    m = Math.floor((sec - h * 3600) / 60);
+    s = sec - h * 3600 - m * 60;
+  } else {
+    s = sec;
+  }
+  return fillZero(h, 2) + ':' + fillZero(m, 2) + ':' + fillZero(s, 2);
+}
+
+var animateBar = function(elmId, ratio) {
+  var h = 400 * ratio;
   var t = 400 - h;
-  $('#mapRect').css({height: h, top: t});
+  $(elmId).animate({height: h, top: t}, 1000);
 }
 
-var animateMapBar = function(per) {
-  var h = 400 * per / 100;
+var drawBar = function(elmId, ratio) {
+  var h = 400 * ratio;
   var t = 400 - h;
-  $('#mapRect').animate({height: h, top: t}, 1000);
+  $(elmId).css({opacity: "0.4", height: h, top: t});
 }

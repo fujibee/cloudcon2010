@@ -1,0 +1,44 @@
+#top
+  #title
+    %img{ :src => "/images/title.png" }
+  #menu
+    %a{ :href => "/console/" }
+      %img{ :src => "/images/menu_home.png" }
+    %img{ :src => "/images/menu_console.png" }
+    %a{ :href => "/console/jobs" }
+      %img{ :src => "/images/menu_job.png" }
+#job
+  #jobby
+    %img{ :src => "/images/bg_job.png" }
+    #startTime
+    #elapsedTime
+    #runState
+    #mapArea
+      #mapRect
+    #reduceArea
+      #reduceRect
+
+:javascript
+  var job    = #{@job.to_json};
+  $(function(){
+    log("start");
+    drawBar('#mapRect', job.mapProgress);
+    drawBar('#reduceRect', job.reduceProgress);
+    var jobTimer = setInterval(function(){
+      $.getJSON('/console/job.json', function(data) {
+        animateBar('#mapRect', data.mapProgress);
+        animateBar('#reduceRect', data.reduceProgress);
+        $('#runState').text(jobStatus[data.runState]);
+        if(isJobFinished(data.runState)) {
+          $('#startTime').text(data.startTime);
+          $('#elapsedTime').text("--:--:--");
+          clearInterval(jobTimer);
+        } else {
+          var start = Math.floor(data.startTime / 1000);
+          $('#startTime').text(formatSec(start));
+          var elapsed = Math.floor((new Date().getTime() - data.startTime) / 1000);
+          $('#elapsedTime').text(formatSec(elapsed));
+        }
+      });
+    }, 1000);
+  });

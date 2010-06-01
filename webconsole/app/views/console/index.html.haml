@@ -19,5 +19,25 @@
       showElephants(count);
     }
     $('#counter').text(count);
-    setInterval(run, 1000);
+    setInterval(function(){
+      var elephantTimerId;
+      $.getJSON('/console/slaves.json', function(data) {
+        elephantTimerId = setInterval(function() {
+          var numComputers = data.computer.length;
+          if(count == numComputers) {
+            clearInterval(elephantTimerId);
+          } else if(count < numComputers) {
+            ++count;
+            $('#counter').text(count);
+            dropElephant();
+            if(count == numComputers) clearInterval(elephantTimerId);
+          } else if(count > numComputers) {
+            --count;
+            $('#counter').text(count);
+            throwElephant(count);
+            if(count == numComputers) clearInterval(elephantTimerId);
+          }
+        }, 1000);
+      });
+    }, 1000);
   });

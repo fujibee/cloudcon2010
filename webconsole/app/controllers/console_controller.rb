@@ -4,15 +4,23 @@ class ConsoleController < ApplicationController
     0
   end
 
-  layout 'hapyrus', :only => [:index, :jobs]
+  layout 'hapyrus', :only => [:index, :job]
   def index
-    # @initial = Hapyrus::Hudson.instance.computer_json.size
-    @initial = num
+    @initial = Hapyrus::Hudson.instance.computer_json['computer'].size
+    # @initial = num
   end
 
   def jobs
-    @map_initial = 30
-    @reduce_initial = 30
+  end
+
+  def job
+    respond_to do |format|
+      format.html {
+        @job = Hapyrus::Hudson.instance.latest_job
+        render
+      }
+      format.json { render :json => Hapyrus::Hudson.instance.latest_job }
+    end
   end
 
   def master
@@ -23,8 +31,8 @@ class ConsoleController < ApplicationController
 
   def slaves
     respond_to do |format|
-      # format.json { render :json => Hapyrus::Hudson.instance.computer_json }
-      format.json { render :json => Array.new(num) }
+      format.json { render :json => Hapyrus::Hudson.instance.computer_json }
+      # format.json { render :json => Array.new(num) }
     end
   end
 
