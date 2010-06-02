@@ -17,7 +17,10 @@ function fillZero( number, size ) {
 
 /* Hapyrus */
 
-var src = "/images/elephants.png";
+var src = "/images/elephant_slim.png";
+var srcWidth = 51;
+var srcHeight = 34;
+
 
 var count = 0;
 var row = 0;
@@ -27,10 +30,10 @@ var totalElephants;
 
 var createElephant = function() {
 var img = $('<img>');
-  img.attr("src", src).attr("width", 90).attr("height", 60);
+  img.attr("src", src).attr("width", srcWidth).attr("height", srcHeight);
   img.css("position", "absolute");
-  img.css("left", 88 * (row % numOfRows));
-  img.css("top", "-200px");
+  img.css("left", (srcWidth - 2) * (row % numOfRows));
+  img.css("top", (- $('#top').height()) + "px");
   img.addClass('elephant');
   return img;
 }
@@ -38,7 +41,7 @@ var img = $('<img>');
 var dropElephant = function() {
   var img = createElephant();
   $('#world').append(img);
-  var top = 550 - 58 * col;
+  var top = ($('#world').height() - srcHeight) - (srcHeight - 2) * col;
   img.animate({top: top + "px"}, 1000, "easeOutBounce");
   row++;
   col = Math.floor(row / numOfRows);
@@ -59,14 +62,14 @@ var showElephants = function(num) {
   for(var i=0; i<num; i++) {
     var img = createElephant();
     $('#world').append(img);
-    var top = 550 - 58 * col;
+    var top = ($('#world').height() - srcHeight) - (srcHeight - 2) * col;
     img.css("top", top);
     row++;
     col = Math.floor(row / numOfRows);
   }
 }
 
-var jobStatus = {
+var JOB_STATUS = {
   1: 'running',
   2: 'succeeded',
   3: 'failed',
@@ -92,6 +95,10 @@ var formatSec = function(sec) {
     s = sec;
   }
   return fillZero(h, 2) + ':' + fillZero(m, 2) + ':' + fillZero(s, 2);
+}
+
+var formatDate = function(date) {
+  return date.getFullYear() + "/" + fillZero(date.getMonth() + 1, 2) + "/" + fillZero(date.getDate(), 2) + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 }
 
 var animateBar = function(elmId, ratio) {

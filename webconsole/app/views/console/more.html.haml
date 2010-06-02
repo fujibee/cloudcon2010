@@ -1,24 +1,11 @@
-#tower
-  %img{ :src => "/images/tower_small.png" }
+#tower{ :style => "top: 615px;" }
+  %img{ :src => "/images/tower.png" }
 #count_bg
   #counter
-#top
-  #title
-    %img{ :src => "/images/title_slim.png" }
-  #menu
-    -#%a{ :href => "/console/" }
-      -#%img{ :src => "/images/menu_home.png" }
-    -# %img{ :src => "/images/menu_console.png", :style => "margin-left: -2px;" }
-    -#%a{ :href => "/console/job" }
-      -#%img{ :src => "/images/menu_job.png", :style => "margin-left: -2px;" }
+#top{ :style => "height:700px;background-color:#86a4ef;" }
 #world
 :javascript
-  var initial = #{@initial};
   $(function(){
-    if(initial !== undefined) {
-      count = initial;
-      showElephants(count);
-    }
     $('#counter').text(count);
     setInterval(function(){
       var elephantTimerId;
@@ -37,12 +24,6 @@
             $('#counter').text(count);
             throwElephant(count);
             if(count == numComputers) clearInterval(elephantTimerId);
-          }
-
-          if(count >= 100) {
-            $('#counter').css('color', 'red');
-          } else {
-            $('#counter').css('color', 'black');
           }
         }, 1000);
       });

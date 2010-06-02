@@ -4,9 +4,9 @@
   #menu
     %a{ :href => "/console/" }
       %img{ :src => "/images/menu_home.png" }
-    %img{ :src => "/images/menu_console.png" }
-    %a{ :href => "/console/jobs" }
-      %img{ :src => "/images/menu_job.png" }
+    -# %img{ :src => "/images/menu_console.png", :style => "margin-left: -2px;" }
+    %a{ :href => "/console/job" }
+      %img{ :src => "/images/menu_job.png", :style => "margin-left: -2px;" }
 #job
   #jobby
     %img{ :src => "/images/bg_job.png" }
@@ -28,14 +28,15 @@
       $.getJSON('/console/job.json', function(data) {
         animateBar('#mapRect', data.mapProgress);
         animateBar('#reduceRect', data.reduceProgress);
-        $('#runState').text(jobStatus[data.runState]);
+        $('#runState').text(JOB_STATUS[data.runState]);
         if(isJobFinished(data.runState)) {
-          $('#startTime').text(data.startTime);
+          var start = new Date(data.startTime);
+          $('#startTime').text(formatDate(start));
           $('#elapsedTime').text("--:--:--");
           clearInterval(jobTimer);
         } else {
-          var start = Math.floor(data.startTime / 1000);
-          $('#startTime').text(formatSec(start));
+          var start = new Date(data.startTime);
+          $('#startTime').text(formatDate(start));
           var elapsed = Math.floor((new Date().getTime() - data.startTime) / 1000);
           $('#elapsedTime').text(formatSec(elapsed));
         }

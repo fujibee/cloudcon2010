@@ -1,13 +1,17 @@
 class ConsoleController < ApplicationController
 
   def num
-    0
+    140
   end
 
-  layout 'hapyrus', :only => [:index, :job]
+  layout 'hapyrus', :only => [:index, :job, :more]
   def index
-    @initial = Hapyrus::Hudson.instance.computer_json['computer'].size
+    computers = Hapyrus::Hudson.instance.computer_json['computer']
+    @initial = computers ? computers.size : 0
     # @initial = num
+  end
+
+  def more
   end
 
   def jobs
@@ -31,8 +35,8 @@ class ConsoleController < ApplicationController
 
   def slaves
     respond_to do |format|
-      format.json { render :json => Hapyrus::Hudson.instance.computer_json }
-      # format.json { render :json => Array.new(num) }
+      # format.json { render :json => Hapyrus::Hudson.instance.computer_json }
+      format.json { render :json => {:computer => Array.new(num)} }
     end
   end
 
