@@ -5,6 +5,7 @@ COMMANDS = [
   :clear,   # stop + delete
   :stop,    # kill swarm process
   :delete,  # remove hadoop dir
+  :status,  # show hudson-slave status
   :test     # for test
 ]
 
@@ -57,6 +58,14 @@ def test(server)
   puts ">> test to #{server}"
   Net::SSH.start(server, USER, :password => PASS) do |ssh|
     p ret = ssh.exec!("hostname")
+  end
+end
+
+def status(server)
+  Net::SSH.start(server, USER, :password => PASS) do |ssh|
+    ret = ssh.exec!("if [ \"$(ps aux | grep java | grep -v grep)\" ]; then echo 1; else echo 0; fi").chomp
+    status = ret == "1" ? 'running' : 'stopped'
+    puts "#{server}: #{status}"
   end
 end
 
